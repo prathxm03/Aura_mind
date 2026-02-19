@@ -1,7 +1,7 @@
 ﻿import { Outlet, Link, useLocation, useNavigate } from "react-router";
 import { useState } from "react";
 import { motion } from "motion/react";
-import { LayoutDashboard, MessageSquare, Heart, TrendingUp, Users, Video, Lightbulb, Settings, AlertCircle, Search, Bell, ChevronRight, Sparkles, LogIn } from "lucide-react";
+import { LayoutDashboard, MessageSquare, Heart, TrendingUp, Users, Video, Lightbulb, Settings, AlertCircle, Search, Bell, ChevronRight, Sparkles, LogIn, X } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
 function getInitials(name) {
@@ -26,6 +26,7 @@ export function Layout() {
   const { user, logout } = useAuth();
   const [isHovered, setIsHovered] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
+  const [showInsight, setShowInsight] = useState(true);
 
   const DEFAULT_NAME = "Virendra Thakur";
   const displayName = user?.name || DEFAULT_NAME;
@@ -121,17 +122,52 @@ export function Layout() {
         </nav>
 
         {/* Daily Insight */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="mx-4 mb-4 p-4 bg-gradient-to-br from-[#EFF6FF] to-[#DBEAFE] rounded-xl border border-[#BFDBFE]"
-        >
-          <div className="text-xs font-medium text-[#1E40AF] mb-1"> Daily Insight</div>
-          <p className="text-xs text-[#64748B] leading-relaxed">
-            "Progress, not perfection. Every small step counts."
-          </p>
-        </motion.div>
+        {showInsight ? (
+          <motion.div
+            key="insight-open"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 10, opacity: 0 }}
+            transition={{ delay: 0.5 }}
+            className="mx-4 mb-4 p-4 bg-gradient-to-br from-[#EFF6FF] to-[#DBEAFE] rounded-xl border border-[#BFDBFE] relative"
+          >
+            <div className="flex items-center justify-between mb-1">
+              <div className="text-xs font-medium text-[#1E40AF] flex items-center gap-1">
+                <Lightbulb className="w-3 h-3" />
+                Daily Insight
+              </div>
+              <motion.button
+                whileHover={{ scale: 1.15 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setShowInsight(false)}
+                className="text-[#93C5FD] hover:text-[#1E40AF] transition-colors"
+                aria-label="Dismiss daily insight"
+              >
+                <X className="w-3.5 h-3.5" />
+              </motion.button>
+            </div>
+            <p className="text-xs text-[#64748B] leading-relaxed">
+              "Progress, not perfection. Every small step counts."
+            </p>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="insight-closed"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mx-4 mb-4"
+          >
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setShowInsight(true)}
+              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-[#BFDBFE] bg-[#EFF6FF] text-[#1E40AF] text-xs font-medium hover:bg-[#DBEAFE] transition-all duration-200"
+            >
+              <Lightbulb className="w-3.5 h-3.5" />
+              Show Daily Insight
+            </motion.button>
+          </motion.div>
+        )}
 
         {/* Emergency SOS */}
         <div className="p-4 border-t border-[#E2E8F0]">
