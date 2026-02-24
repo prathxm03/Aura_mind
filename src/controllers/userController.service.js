@@ -166,9 +166,7 @@ const loginUser = async (req, res) => {
 
 const getUserProfile = async (req, res) => {
   try {
-    const userId = req.user.id; // Assuming auth middleware sets req.user
-
-    const user = await User.findById(userId).select("-password");
+    const user = await User.find();
 
     if (!user) {
       return res.status(404).json({
@@ -177,11 +175,11 @@ const getUserProfile = async (req, res) => {
     }
 
     res.status(200).json({
-      message: "Profile retrieved successfully",
+      message: "user data retrieved successfully",
       user,
     });
   } catch (error) {
-    console.error("getUserProfile Error:", error.message);
+    console.error("get User data Error:", error.message);
     res.status(500).json({
       message: error.message || "Server error",
     });
