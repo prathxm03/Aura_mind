@@ -1,12 +1,13 @@
 import { useState, useRef } from "react";
 import { useNavigate, Link } from "react-router";
+import { useDispatch } from "react-redux";
 import { motion } from "motion/react";
 import { Heart, Sparkles, Eye, EyeOff, User, Mail, Lock, Camera } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
+import { login } from "../store/authSlice";
 
 export function Login() {
     const navigate = useNavigate();
-    const { login } = useAuth();
+    const dispatch = useDispatch();
     const fileRef = useRef(null);
 
     const [mode, setMode] = useState("login"); // "login" | "register"
@@ -41,7 +42,7 @@ export function Login() {
             if (!form.email.trim()) { setError("Please enter your email."); return; }
             if (form.password.length < 6) { setError("Password must be at least 6 characters."); return; }
             const userData = { name: form.name.trim(), email: form.email.trim(), photo: preview };
-            login(userData);
+            dispatch(login(userData));
             navigate("/");
         } else {
             // Simple login — check localStorage for existing user
@@ -50,7 +51,7 @@ export function Login() {
                 const stored = localStorage.getItem("auramind_user");
                 const existing = stored ? JSON.parse(stored) : null;
                 if (existing && existing.email === form.email.trim()) {
-                    login(existing);
+                    dispatch(login(existing));
                     navigate("/");
                 } else {
                     setError("No account found. Please register first.");
@@ -92,8 +93,8 @@ export function Login() {
                             key={tab}
                             onClick={() => { setMode(tab); setError(""); }}
                             className={`flex-1 py-3.5 text-sm font-semibold transition-colors capitalize ${mode === tab
-                                    ? "text-[#10B981] border-b-2 border-[#10B981]"
-                                    : "text-gray-400 hover:text-gray-600"
+                                ? "text-[#10B981] border-b-2 border-[#10B981]"
+                                : "text-gray-400 hover:text-gray-600"
                                 }`}
                         >
                             {tab === "login" ? "Sign In" : "Create Account"}

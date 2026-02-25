@@ -1,8 +1,9 @@
 ﻿import { Outlet, Link, useLocation, useNavigate } from "react-router";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "motion/react";
 import { LayoutDashboard, MessageSquare, Heart, TrendingUp, Users, Video, Lightbulb, Settings, AlertCircle, Search, Bell, ChevronRight, Sparkles, LogIn, X } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
+import { logout, selectUser } from "../store/authSlice";
 
 function getInitials(name) {
   if (!name) return "VT";
@@ -23,18 +24,18 @@ const navigation = [
 export function Layout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
   const [isHovered, setIsHovered] = useState(null);
   const [showProfile, setShowProfile] = useState(false);
   const [showInsight, setShowInsight] = useState(true);
 
-  const DEFAULT_NAME = "Virendra Thakur";
-  const displayName = user?.name || DEFAULT_NAME;
-  const displayInitials = user ? getInitials(user.name) : getInitials(DEFAULT_NAME);
+  const displayName = user?.name || "";
+  const displayInitials = user ? getInitials(user.name) : "";
   const displayPhoto = user?.photo || null;
 
   function handleLogout() {
-    logout();
+    dispatch(logout());
     setShowProfile(false);
     navigate("/login");
   }
