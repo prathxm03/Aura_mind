@@ -1,20 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const STORAGE_KEY = "auramind_user";
-
-function loadUserFromStorage() {
-    try {
-        const data = localStorage.getItem(STORAGE_KEY);
-        return data ? JSON.parse(data) : null;
-    } catch {
-        return null;
-    }
-}
-
 const authSlice = createSlice({
     name: "auth",
     initialState: {
-        user: loadUserFromStorage(),
+        user: '',
     },
     reducers: {
         login(state, action) {

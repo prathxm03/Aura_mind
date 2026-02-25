@@ -19,7 +19,6 @@ import { store } from "./redux/store";
 export default function App() {
   return (
     <Provider store={store}>
-      <h1>jdbjsdbh</h1>
       <RouterProvider router={router} />
     </Provider>
   );

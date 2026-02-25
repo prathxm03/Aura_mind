@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router";
 import { useDispatch } from "react-redux";
 import { motion } from "motion/react";
 import { Heart, Sparkles, Eye, EyeOff, User, Mail, Lock, Camera } from "lucide-react";
-import { login } from "../store/authSlice";
+import { login } from "../redux/auth/authSlice";
 
 export function Login() {
     const navigate = useNavigate();

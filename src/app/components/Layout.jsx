@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "motion/react";
 import { LayoutDashboard, MessageSquare, Heart, TrendingUp, Users, Video, Lightbulb, Settings, AlertCircle, Search, Bell, ChevronRight, Sparkles, LogIn, X } from "lucide-react";
-import { logout, selectUser } from "../store/authSlice";
+import { logout, selectUser } from "../redux/auth/authSlice";
 
 function getInitials(name) {
   if (!name) return "VT";
