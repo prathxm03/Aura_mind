@@ -2,7 +2,7 @@ set or add in env
 JWT_SECRET=bfjkbsabdshjbsadjbd
 
 
-api 
+//api 
 
 1) http://localhost:4000/auth/signUp 
     {name,email,avatar,pasword}
