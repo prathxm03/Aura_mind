@@ -92,8 +92,8 @@ export function Login() {
                             key={tab}
                             onClick={() => { setMode(tab); setError(""); }}
                             className={`flex-1 py-3.5 text-sm font-semibold transition-colors capitalize ${mode === tab
-                                    ? "text-[#10B981] border-b-2 border-[#10B981]"
-                                    : "text-gray-400 hover:text-gray-600"
+                                ? "text-[#10B981] border-b-2 border-[#10B981]"
+                                : "text-gray-400 hover:text-gray-600"
                                 }`}
                         >
                             {tab === "login" ? "Sign In" : "Create Account"}
